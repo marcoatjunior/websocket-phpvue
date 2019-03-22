@@ -26,7 +26,8 @@ var app = new Vue({
             var self = this;
 
             // Conectando
-            self.ws = new WebSocket('ws://localhost:8080');
+            self.ws = new WebSocket('wss://commgroup.herokuapp.com:8080');
+            //self.ws = new WebSocket('ws://localhost:8080');
 
             // Evento que será chamado ao abrir conexão
             self.ws.onopen = function() {
