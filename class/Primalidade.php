@@ -33,7 +33,7 @@ class Primalidade
                 $n = (float) ($i / $numerosPrimos[$j]);
 
                 // Se não possui pontos flutuantes, é divisor
-                if ($n % 1 == 0) {
+                if ((int) $n == $n) {
                     $divisores++;
                 }
             }
