@@ -5,7 +5,7 @@ var app = new Vue({
 
     // Propriedades do aplicativo
     data: {
-        user: 'Anônimo',
+        user: '',
         text: null,
         messages: [],
         ws: null,
