@@ -57,7 +57,10 @@ var app = new Vue({
 
         // Método responsável por adicionar uma notificação de sucesso
         addSuccessNotification: function(text) {
-            this.addMessage({color: 'green', text: text});
+            // this.addMessage({color: 'green', text: text});
+            this.addMessage({color: 'blue', text: 'Olá, turma!'});
+            this.addMessage({color: 'gray', text: 'Hoje vamos aprender sobre número primos!'});
+            this.addMessage({color: 'green', text: 'Me informe um número e eu te darei a resposta!'});
         },
 
         // Método responsável por adicionar uma notificação de erro
@@ -70,8 +73,23 @@ var app = new Vue({
 
             var self = this;
 
-            // Se não houver o texto da mensagem ou o nome de usuário
-            if (!self.text || !self.user) {
+            // Se não houver o nome de usuário
+            if (!self.user) {
+                alert('Informe o nick de usuário para enviar a mensagem!');
+                // Saindo do método
+                return;
+            }
+
+            // Se não houver o texto da mensagem
+            if (!self.text) {
+                alert('Informe a mensagem que deseja enviar!');
+                // Saindo do método
+                return;
+            }
+
+            // Se o valor do texto não for um número ou for menor ou igual a zero
+            if (isNaN(parseInt(self.text)) || parseInt(self.text) <= 0) {
+                alert('Informe um valor válido!');
                 // Saindo do método
                 return;
             }
@@ -95,7 +113,7 @@ var app = new Vue({
             // Envia os dados para o servidor através do websocket
             self.ws.send(JSON.stringify({
                 user: self.user,
-                text: self.text,
+                text: parseInt(self.text),
             }));
 
             // Limpando texto da mensagem

@@ -1,5 +1,11 @@
 body {
-    background-color: #F1F1F1;
+    background-color: #d0e9c6;
+}
+
+#access {
+    background-color: #004E98;
+    padding: 5px;
+    margin-top: 10px;
 }
 
 #messages span.name {
@@ -13,11 +19,13 @@ body {
 #messages {
     background-color: #FFF;
     padding: 10px;
-    border: 1px solid #CCC;
-    height: 300px;
+    border: 2px solid #004E98;
+    border-top: 30px solid #004E98;
+    height: 500px;
     overflow-y: auto;
     margin-bottom: 10px;
-    margin-top: 10px;
+    margin-top: 40px;
+    overflow-x: hidden;
 }
 
 [v-cloak] { display:none; }

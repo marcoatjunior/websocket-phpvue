@@ -1,5 +1,7 @@
 {
     "require": {
-        "cboden/ratchet": "^0.3.6"
+        "cboden/ratchet": "^0.3.6",
+        "nesbot/carbon": "^2.16",
+        "ext-json": "^"
     }
 }

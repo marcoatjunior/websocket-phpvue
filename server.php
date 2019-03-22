@@ -6,6 +6,7 @@ use Ratchet\WebSocket\WsServer;
 
 // Incluindo biblioteca e classe do chat
 require 'vendor/autoload.php';
+require 'class/Primalidade.php';
 require 'class/SimpleChat.php';
 
 // Iniciando conexão

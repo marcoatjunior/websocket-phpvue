@@ -2,6 +2,7 @@
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
+use Carbon\Carbon;
 
 class SimpleChat implements MessageComponentInterface
 {
@@ -34,20 +35,22 @@ class SimpleChat implements MessageComponentInterface
      *
      * @param ConnectionInterface $from
      * @param string $data
+     * @throws \Exception
      */
     public function onMessage(ConnectionInterface $from, $data)
     {
         // Convertendo os dados recebidos para vetor e adicionando a data
         $data = json_decode($data);
-        $data->date = date('d/m/Y H:i:s');
+        $data->date = Carbon::now()->format('d/m/Y H:i:s');
 
-        // Passando pelos clientes conectados e enviando a mensagem
-        // para cada um deles
+        // Passando pelos clientes conectados e enviando a mensagem para cada um deles
         foreach ($this->clients as $client) {
             $client->send(json_encode($data));
         }
 
         echo "Cliente {$from->resourceId} enviou uma mensagem" . PHP_EOL;
+
+        $this->messageSendedByServer($data);
     }
 
     /**
@@ -74,5 +77,31 @@ class SimpleChat implements MessageComponentInterface
         $conn->close();
 
         echo "Ocorreu um erro: {$e->getMessage()}" . PHP_EOL;
+    }
+
+    /**
+     * Enviar mensagem com a resposta em nome do servidor, como o usuário que requisitou.
+     *
+     * @param $connection
+     * @throws Exception
+     */
+    private function messageSendedByServer($connection)
+    {
+        $usuario = $connection->user;
+
+        $connection->user = "Sistema";
+
+        $connection->text = Primalidade::isPrimo($connection->text)
+            ? "Sim, $usuario! $connection->text é um número primo."
+            : "Não, $usuario! $connection->text não é um número primo.";
+
+        $connection->date = Carbon::now()->addSecond()->format('d/m/Y H:i:s');
+
+        $connection->color = "red";
+
+        // Passando pelos clientes conectados e enviando a mensagem para cada um deles
+        foreach ($this->clients as $client) {
+            $client->send(json_encode($connection));
+        }
     }
 }
