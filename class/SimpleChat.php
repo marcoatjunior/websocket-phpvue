@@ -91,13 +91,15 @@ class SimpleChat implements MessageComponentInterface
 
         $connection->user = "Sistema";
 
-        $connection->text = Primalidade::isPrimo($connection->text)
+		$isPrimo = Primalidade::isPrimo($connection->text);
+
+        $connection->text = $isPrimo
             ? "Sim, $usuario! $connection->text é um número primo."
             : "Não, $usuario! $connection->text não é um número primo.";
 
         $connection->date = Carbon::now()->addSecond()->format('d/m/Y H:i:s');
 
-        $connection->color = "red";
+        $connection->color = $isPrimo ? "green" : "red";
 
         // Passando pelos clientes conectados e enviando a mensagem para cada um deles
         foreach ($this->clients as $client) {
